@@ -28,46 +28,46 @@ import Foundation
 import QuartzCore
 import UIKit
 
-open class ESRefreshHeaderAnimator: UIView, ESRefreshProtocol, ESRefreshAnimatorProtocol, ESRefreshImpactProtocol {
-    open var pullToRefreshDescription = NSLocalizedString("Pull to refresh", comment: "") {
+public class ESRefreshHeaderAnimator: UIView, ESRefreshProtocol, ESRefreshAnimatorProtocol, ESRefreshImpactProtocol {
+    public var pullToRefreshDescription = NSLocalizedString("Pull to refresh", comment: "") {
         didSet {
             if pullToRefreshDescription != oldValue {
                 titleLabel.text = pullToRefreshDescription;
             }
         }
     }
-    open var releaseToRefreshDescription = NSLocalizedString("Release to refresh", comment: "")
-    open var loadingDescription = NSLocalizedString("Loading...", comment: "")
+    public var releaseToRefreshDescription = NSLocalizedString("Release to refresh", comment: "")
+    public var loadingDescription = NSLocalizedString("Loading...", comment: "")
 
-    open var view: UIView { return self }
-    open var insets: UIEdgeInsets = UIEdgeInsets.zero
-    open var trigger: CGFloat = 60.0
-    open var executeIncremental: CGFloat = 60.0
-    open var state: ESRefreshViewState = .pullToRefresh
+    public var view: UIView { return self }
+    public var insets: UIEdgeInsets = UIEdgeInsetsZero
+    public var trigger: CGFloat = 60.0
+    public var executeIncremental: CGFloat = 60.0
+    public var state: ESRefreshViewState = .pullToRefresh
 
-    fileprivate let imageView: UIImageView = {
+    private let imageView: UIImageView = {
         let imageView = UIImageView.init()
-        if /* Carthage */ let bundle = Bundle.init(identifier: "com.eggswift.ESPullToRefresh") {
-            imageView.image = UIImage(named: "icon_pull_to_refresh_arrow", in: bundle, compatibleWith: nil)
-        } else if /* CocoaPods */ let bundle = Bundle.init(identifier: "org.cocoapods.ESPullToRefresh") {
-            imageView.image = UIImage(named: "ESPullToRefresh.bundle/icon_pull_to_refresh_arrow", in: bundle, compatibleWith: nil)
+        if /* Carthage */ let bundle = NSBundle.init(identifier: "com.eggswift.ESPullToRefresh") {
+            imageView.image = UIImage(named: "icon_pull_to_refresh_arrow", inBundle: bundle, compatibleWithTraitCollection: nil)
+        } else if /* CocoaPods */ let bundle = NSBundle.init(identifier: "org.cocoapods.ESPullToRefresh") {
+            imageView.image = UIImage(named: "ESPullToRefresh.bundle/icon_pull_to_refresh_arrow", inBundle: bundle, compatibleWithTraitCollection: nil)
         } else /* Manual */ {
             imageView.image = UIImage(named: "icon_pull_to_refresh_arrow")
         }
         return imageView
     }()
     
-    fileprivate let titleLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let label = UILabel.init(frame: CGRect.zero)
-        label.font = UIFont.systemFont(ofSize: 14.0)
+        label.font = UIFont.systemFontOfSize( 14.0)
         label.textColor = UIColor.init(white: 0.625, alpha: 1.0)
-        label.textAlignment = .left
+        label.textAlignment = .Left
         return label
     }()
     
-    fileprivate let indicatorView: UIActivityIndicatorView = {
-        let indicatorView = UIActivityIndicatorView.init(activityIndicatorStyle: .gray)
-        indicatorView.isHidden = true
+    private let indicatorView: UIActivityIndicatorView = {
+        let indicatorView = UIActivityIndicatorView.init(activityIndicatorStyle: .Gray)
+        indicatorView.hidden = true
         return indicatorView
     }()
     
@@ -83,28 +83,28 @@ open class ESRefreshHeaderAnimator: UIView, ESRefreshProtocol, ESRefreshAnimator
         fatalError("init(coder:) has not been implemented")
     }
     
-    open func refreshAnimationBegin(view: ESRefreshComponent) {
+    public func refreshAnimationBegin(view: ESRefreshComponent) {
         indicatorView.startAnimating()
-        indicatorView.isHidden = false
-        imageView.isHidden = true
+        indicatorView.hidden = false
+        imageView.hidden = true
         titleLabel.text = loadingDescription
-        imageView.transform = CGAffineTransform(rotationAngle: 0.000001 - CGFloat(Double.pi))
+        imageView.transform = CGAffineTransformMakeRotation(0.000001 - CGFloat(M_PI))
     }
   
-    open func refreshAnimationEnd(view: ESRefreshComponent) {
+    public func refreshAnimationEnd(view: ESRefreshComponent) {
         indicatorView.stopAnimating()
-        indicatorView.isHidden = true
-        imageView.isHidden = false
+        indicatorView.hidden = true
+        imageView.hidden = false
         titleLabel.text = pullToRefreshDescription
-        imageView.transform = CGAffineTransform.identity
+        imageView.transform = CGAffineTransformIdentity
     }
     
-    open func refresh(view: ESRefreshComponent, progressDidChange progress: CGFloat) {
+    public func refresh(view: ESRefreshComponent, progressDidChange progress: CGFloat) {
         // Do nothing
         
     }
     
-    open func refresh(view: ESRefreshComponent, stateDidChange state: ESRefreshViewState) {
+    public func refresh(view: ESRefreshComponent, stateDidChange state: ESRefreshViewState) {
         guard self.state != state else {
             return
         }
@@ -119,17 +119,17 @@ open class ESRefreshHeaderAnimator: UIView, ESRefreshProtocol, ESRefreshAnimator
             titleLabel.text = releaseToRefreshDescription
             self.setNeedsLayout()
             self.impact()
-            UIView.animate(withDuration: 0.2, delay: 0.0, options: UIViewAnimationOptions(), animations: {
+            UIView.animateWithDuration( 0.2, delay: 0.0, options: UIViewAnimationOptions(), animations: {
                 [weak self] in
-                self?.imageView.transform = CGAffineTransform(rotationAngle: 0.000001 - CGFloat(Double.pi))
+                self?.imageView.transform = CGAffineTransformMakeRotation(0.000001 - CGFloat(M_PI))
             }) { (animated) in }
             break
         case .pullToRefresh:
             titleLabel.text = pullToRefreshDescription
             self.setNeedsLayout()
-            UIView.animate(withDuration: 0.2, delay: 0.0, options: UIViewAnimationOptions(), animations: {
+            UIView.animateWithDuration( 0.2, delay: 0.0, options: UIViewAnimationOptions(), animations: {
                 [weak self] in
-                self?.imageView.transform = CGAffineTransform.identity
+                self?.imageView.transform = CGAffineTransformIdentity
             }) { (animated) in }
             break
         default:
@@ -137,7 +137,7 @@ open class ESRefreshHeaderAnimator: UIView, ESRefreshProtocol, ESRefreshAnimator
         }
     }
 
-    open override func layoutSubviews() {
+    public override func layoutSubviews() {
         super.layoutSubviews()
         let s = self.bounds.size
         let w = s.width

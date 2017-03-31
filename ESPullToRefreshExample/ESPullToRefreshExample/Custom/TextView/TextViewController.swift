@@ -23,10 +23,10 @@ class TextViewController: UIViewController {
         super.viewDidLoad()
         
         textView = UITextView.init(frame: self.view.bounds)
-        textView.isEditable = false
+        textView.editable = false
         textView.alwaysBounceVertical = true
         textView.textColor = UIColor.init(white: 0.3, alpha: 1.0)
-        textView.textAlignment = .justified
+        textView.textAlignment = .Justified
         textView.textContainerInset = UIEdgeInsets.init(top: 12, left: 8, bottom: 12, right: 8)
         self.view.addSubview(textView)
         
@@ -35,12 +35,12 @@ class TextViewController: UIViewController {
             guard let weakSelf = self else {
                 return
             }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+            Dispatch.after(3.0) {
                 weakSelf.num = 0
                 let style = NSMutableParagraphStyle.init()
                 style.lineSpacing = 0.0
                 style.firstLineHeadIndent = 10.0
-                style.alignment = .justified
+                style.alignment = .Justified
                 weakSelf.textView.attributedText = NSAttributedString.init(string: weakSelf.text1, attributes: [NSParagraphStyleAttributeName : style, NSFontAttributeName: UIFont.init(name: "ChalkboardSE-Bold", size: 16.0)!, NSForegroundColorAttributeName: UIColor.init(white: 0.3, alpha: 1.0)])
                 weakSelf.textView.es_stopPullToRefresh()
             }
@@ -51,7 +51,7 @@ class TextViewController: UIViewController {
             guard let weakSelf = self else {
                 return
             }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+            Dispatch.after(3.0) {
                 weakSelf.num += 1
                 var str: String = weakSelf.text1
                 if weakSelf.num >= 1 {
@@ -78,7 +78,7 @@ class TextViewController: UIViewController {
                     let style = NSMutableParagraphStyle.init()
                     style.lineSpacing = 0.0
                     style.firstLineHeadIndent = 10.0
-                    style.alignment = .justified
+                    style.alignment = .Justified
                     weakSelf.textView.attributedText = NSAttributedString.init(string: str, attributes: [NSParagraphStyleAttributeName : style, NSFontAttributeName: UIFont.init(name: "ChalkboardSE-Bold", size: 16.0)!, NSForegroundColorAttributeName: UIColor.init(white: 0.3, alpha: 1.0)])
 
                     weakSelf.textView.es_stopLoadingMore()
@@ -87,14 +87,15 @@ class TextViewController: UIViewController {
         }
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         self.textView.es_startPullToRefresh()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        if !textView.frame.equalTo(self.view.bounds) {
+        
+        if !CGRectEqualToRect(textView.frame, self.view.bounds) {
             textView.frame = self.view.bounds
         }
     }

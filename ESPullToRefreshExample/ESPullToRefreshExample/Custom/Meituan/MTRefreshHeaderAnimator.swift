@@ -13,9 +13,9 @@ import UIKit
 
 public class MTRefreshHeaderAnimator: UIView, ESRefreshProtocol, ESRefreshAnimatorProtocol {
     
-    public var insets: UIEdgeInsets = UIEdgeInsets.zero
+    public var insets: UIEdgeInsets = UIEdgeInsetsZero
     public var view: UIView { return self }
-    public var duration: TimeInterval = 0.3
+    public var duration: Double = 0.3
     public var trigger: CGFloat = 56.0
     public var executeIncremental: CGFloat = 56.0
     public var state: ESRefreshViewState = .pullToRefresh
@@ -37,7 +37,7 @@ public class MTRefreshHeaderAnimator: UIView, ESRefreshProtocol, ESRefreshAnimat
     
     public func refreshAnimationBegin(view: ESRefreshComponent) {
         imageView.center = self.center
-        UIView.animate(withDuration: 0.2, delay: 0, options: .curveLinear, animations: {
+        UIView.animateWithDuration( 0.2, delay: 0, options: .CurveLinear, animations: {
             self.imageView.frame = CGRect.init(x: (self.bounds.size.width - 39.0) / 2.0,
                                                y: self.bounds.size.height - 50.0,
                                            width: 39.0,
@@ -62,8 +62,8 @@ public class MTRefreshHeaderAnimator: UIView, ESRefreshProtocol, ESRefreshAnimat
         imageView.stopAnimating()
         imageView.image = UIImage.init(named: "icon_pull_animation_1")
         
-        UIView.animate(withDuration: 0.2, delay: 0, options: .curveLinear, animations: {
-            self.refresh(view: view, progressDidChange: 0.0)
+        UIView.animateWithDuration( 0.2, delay: 0, options: .CurveLinear, animations: {
+            self.refresh(view, progressDidChange: 0.0)
         }, completion: { (finished) in
         })
     }

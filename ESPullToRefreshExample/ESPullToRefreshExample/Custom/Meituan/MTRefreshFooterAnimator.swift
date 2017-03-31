@@ -16,7 +16,7 @@ public class MTRefreshFooterAnimator: UIView, ESRefreshProtocol, ESRefreshAnimat
     public var view: UIView {
         return self
     }
-    public var insets: UIEdgeInsets = UIEdgeInsets.zero
+    public var insets: UIEdgeInsets = UIEdgeInsetsZero
     public var trigger: CGFloat = 48.0
     public var executeIncremental: CGFloat = 48.0
     public var state: ESRefreshViewState = .pullToRefresh
@@ -33,20 +33,20 @@ public class MTRefreshFooterAnimator: UIView, ESRefreshProtocol, ESRefreshAnimat
     }()
     private let titleLabel: UILabel = {
         let label = UILabel.init(frame: CGRect.zero)
-        label.font = UIFont.systemFont(ofSize: 14.0)
+        label.font = UIFont.systemFontOfSize( 14.0)
         label.textColor = UIColor.init(white: 160.0 / 255.0, alpha: 1.0)
-        label.textAlignment = .center
+        label.textAlignment = .Center
         return label
     }()
     private let indicatorView: UIActivityIndicatorView = {
-        let indicatorView = UIActivityIndicatorView.init(activityIndicatorStyle: .gray)
-        indicatorView.isHidden = true
+        let indicatorView = UIActivityIndicatorView.init(activityIndicatorStyle: .Gray)
+        indicatorView.hidden = true
         return indicatorView
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = UIColor.white
+        self.backgroundColor = UIColor.whiteColor()
         titleLabel.text = loadingMoreDescription
         addSubview(titleLabel)
         addSubview(indicatorView)
@@ -60,12 +60,12 @@ public class MTRefreshFooterAnimator: UIView, ESRefreshProtocol, ESRefreshAnimat
     
     public func refreshAnimationBegin(view: ESRefreshComponent) {
         indicatorView.startAnimating()
-        indicatorView.isHidden = false
+        indicatorView.hidden = false
     }
     
     public func refreshAnimationEnd(view: ESRefreshComponent) {
         indicatorView.stopAnimating()
-        indicatorView.isHidden = true
+        indicatorView.hidden = true
     }
     
     public func refresh(view: ESRefreshComponent, progressDidChange progress: CGFloat) {

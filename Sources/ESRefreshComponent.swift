@@ -28,48 +28,48 @@ import UIKit
 
 public typealias ESRefreshHandler = (() -> ())
 
-open class ESRefreshComponent: UIView {
+public class ESRefreshComponent: UIView {
     
-    open weak var scrollView: UIScrollView?
+    public weak var scrollView: UIScrollView?
     
     /// @param handler Refresh callback method
-    open var handler: ESRefreshHandler?
+    public var handler: ESRefreshHandler?
     
     /// @param animator Animated view refresh controls, custom must comply with the following two protocol
-    open var animator: (ESRefreshProtocol & ESRefreshAnimatorProtocol)!
+    public var animator: protocol<ESRefreshProtocol, ESRefreshAnimatorProtocol>!
     
     /// @param refreshing or not
-    fileprivate var _isRefreshing = false
-    open var isRefreshing: Bool {
+    private var _isRefreshing = false
+    public var isRefreshing: Bool {
         get {
             return self._isRefreshing
         }
     }
     
     /// @param auto refreshing or not
-    fileprivate var _isAutoRefreshing = false
-    open var isAutoRefreshing: Bool {
+    private var _isAutoRefreshing = false
+    public var isAutoRefreshing: Bool {
         get {
             return self._isAutoRefreshing
         }
     }
     
     /// @param tag observing
-    fileprivate var isObservingScrollView = false
-    fileprivate var isIgnoreObserving = false
+    private var isObservingScrollView = false
+    private var isIgnoreObserving = false
 
     public override init(frame: CGRect) {
         super.init(frame: frame)
-        autoresizingMask = [.flexibleLeftMargin, .flexibleWidth, .flexibleRightMargin]
+        autoresizingMask = [.FlexibleLeftMargin, .FlexibleWidth, .FlexibleRightMargin]
     }
     
-    public convenience init(frame: CGRect, handler: @escaping ESRefreshHandler) {
+    public convenience init(frame: CGRect, handler: ESRefreshHandler) {
         self.init(frame: frame)
         self.handler = handler
         self.animator = ESRefreshAnimator.init()
     }
     
-    public convenience init(frame: CGRect, handler: @escaping ESRefreshHandler, animator: ESRefreshProtocol & ESRefreshAnimatorProtocol) {
+    public convenience init(frame: CGRect, handler: ESRefreshHandler, animator: protocol<ESRefreshProtocol, ESRefreshAnimatorProtocol>) {
         self.init(frame: frame)
         self.handler = handler
         self.animator = animator
@@ -83,18 +83,19 @@ open class ESRefreshComponent: UIView {
         removeObserver()
     }
     
-    open override func willMove(toSuperview newSuperview: UIView?) {
-        super.willMove(toSuperview: newSuperview)
+    public override func willMoveToSuperview(newSuperview: UIView?) {
+        super.willMoveToSuperview(newSuperview)
         /// Remove observer from superview immediately
         self.removeObserver()
-        DispatchQueue.main.async { [weak self, newSuperview] in
+        let queue = dispatch_get_main_queue()
+        dispatch_async(queue) { [weak self, newSuperview] in
             guard let weakSelf = self else { return }
             /// Add observer to new superview in next runloop
             weakSelf.addObserver(newSuperview)
         }
     }
     
-    open override func didMoveToSuperview() {
+    public override func didMoveToSuperview() {
         super.didMoveToSuperview()
         self.scrollView = self.superview as? UIScrollView
         if let _ = animator {
@@ -107,68 +108,65 @@ open class ESRefreshComponent: UIView {
                                       width: self.bounds.size.width - inset.left - inset.right,
                                       height: self.bounds.size.height - inset.top - inset.bottom)
                 v.autoresizingMask = [
-                    .flexibleWidth,
-                    .flexibleTopMargin,
-                    .flexibleHeight,
-                    .flexibleBottomMargin
+                    .FlexibleWidth,
+                    .FlexibleTopMargin,
+                    .FlexibleHeight,
+                    .FlexibleBottomMargin
                 ]
             }
         }
     }
     
-}
-
-extension ESRefreshComponent /* KVO methods */ {
+    /* KVO methods */
     
-    fileprivate static var context = "ESRefreshKVOContext"
-    fileprivate static let offsetKeyPath = "contentOffset"
-    fileprivate static let contentSizeKeyPath = "contentSize"
+    private static var context = "ESRefreshKVOContext"
+    private static let offsetKeyPath = "contentOffset"
+    private static let contentSizeKeyPath = "contentSize"
     
-    public func ignoreObserver(_ ignore: Bool = false) {
+    public func ignoreObserver(ignore: Bool = false) {
         if let scrollView = scrollView {
-            scrollView.isScrollEnabled = !ignore
+            scrollView.scrollEnabled = !ignore
         }
         isIgnoreObserving = ignore
     }
     
-    fileprivate func addObserver(_ view: UIView?) {
-        if let scrollView = view as? UIScrollView, !isObservingScrollView {
-            scrollView.addObserver(self, forKeyPath: ESRefreshComponent.offsetKeyPath, options: [.initial, .new], context: &ESRefreshComponent.context)
-            scrollView.addObserver(self, forKeyPath: ESRefreshComponent.contentSizeKeyPath, options: [.initial, .new], context: &ESRefreshComponent.context)
+    private func addObserver(view: UIView?) {
+        if let scrollView = view as? UIScrollView where !isObservingScrollView {
+            scrollView.addObserver(self, forKeyPath: ESRefreshComponent.offsetKeyPath, options: [.Initial, .New], context: &ESRefreshComponent.context)
+            scrollView.addObserver(self, forKeyPath: ESRefreshComponent.contentSizeKeyPath, options: [.Initial, .New], context: &ESRefreshComponent.context)
             isObservingScrollView = true
         }
     }
     
-    fileprivate func removeObserver() {
-        if let scrollView = superview as? UIScrollView, isObservingScrollView {
+    private func removeObserver() {
+        if let scrollView = superview as? UIScrollView where isObservingScrollView {
             scrollView.removeObserver(self, forKeyPath: ESRefreshComponent.offsetKeyPath, context: &ESRefreshComponent.context)
             scrollView.removeObserver(self, forKeyPath: ESRefreshComponent.contentSizeKeyPath, context: &ESRefreshComponent.context)
             isObservingScrollView = false
         }
     }
     
-    override open func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+    
+    public override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         if context == &ESRefreshComponent.context {
-            guard isUserInteractionEnabled == true && isHidden == false else {
+            guard userInteractionEnabled == true && hidden == false else {
                 return
             }
             if keyPath == ESRefreshComponent.contentSizeKeyPath {
                 if isIgnoreObserving == false {
-                    sizeChangeAction(object: object as AnyObject?, change: change)
+                    sizeChangeAction(object, change: change)
                 }
             } else if keyPath == ESRefreshComponent.offsetKeyPath {
                 if isIgnoreObserving == false {
-                    offsetChangeAction(object: object as AnyObject?, change: change)
+                    offsetChangeAction(object, change: change)
                 }
             }
         } else {
-
+            
         }
     }
     
-}
-
-public extension ESRefreshComponent /* Action */ {
+    /* Action */
 
     public final func startRefreshing(isAuto: Bool = false) -> Void {
         guard isRefreshing == false && isAutoRefreshing == false else {
@@ -199,12 +197,12 @@ public extension ESRefreshComponent /* Action */ {
     }
     
     //  ScrollView contentSize change action
-    public func sizeChangeAction(object: AnyObject?, change: [NSKeyValueChangeKey : Any]?) {
+    public func sizeChangeAction(object: AnyObject?, change: [NSKeyValueChangeKey : AnyObject]?) {
         
     }
     
     //  ScrollView offset change action
-    public func offsetChangeAction(object: AnyObject?, change: [NSKeyValueChangeKey : Any]?) {
+    public func offsetChangeAction(object: AnyObject?, change: [NSKeyValueChangeKey : AnyObject]?) {
         
     }
     

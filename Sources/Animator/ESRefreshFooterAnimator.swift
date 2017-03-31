@@ -25,30 +25,30 @@
 
 import UIKit
 
-open class ESRefreshFooterAnimator: UIView, ESRefreshProtocol, ESRefreshAnimatorProtocol {
+public class ESRefreshFooterAnimator: UIView, ESRefreshProtocol, ESRefreshAnimatorProtocol {
 
-    open var loadingMoreDescription: String = NSLocalizedString("Loading more", comment: "")
-    open var noMoreDataDescription: String  = NSLocalizedString("No more data", comment: "")
-    open var loadingDescription: String     = NSLocalizedString("Loading...", comment: "")
+    public var loadingMoreDescription: String = NSLocalizedString("Loading more", comment: "")
+    public var noMoreDataDescription: String  = NSLocalizedString("No more data", comment: "")
+    public var loadingDescription: String     = NSLocalizedString("Loading...", comment: "")
 
-    open var view: UIView { return self }
-    open var duration: TimeInterval = 0.3
-    open var insets: UIEdgeInsets = UIEdgeInsets.zero
-    open var trigger: CGFloat = 42.0
-    open var executeIncremental: CGFloat = 42.0
-    open var state: ESRefreshViewState = .pullToRefresh
+    public var view: UIView { return self }
+    public var duration: NSTimeInterval = 0.3
+    public var insets: UIEdgeInsets = UIEdgeInsetsZero
+    public var trigger: CGFloat = 42.0
+    public var executeIncremental: CGFloat = 42.0
+    public var state: ESRefreshViewState = .pullToRefresh
     
-    fileprivate let titleLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let label = UILabel.init(frame: CGRect.zero)
-        label.font = UIFont.systemFont(ofSize: 14.0)
+        label.font = UIFont.systemFontOfSize(14.0)
         label.textColor = UIColor.init(white: 160.0 / 255.0, alpha: 1.0)
-        label.textAlignment = .center
+        label.textAlignment = .Center
         return label
     }()
     
-    fileprivate let indicatorView: UIActivityIndicatorView = {
-        let indicatorView = UIActivityIndicatorView.init(activityIndicatorStyle: .gray)
-        indicatorView.isHidden = true
+    private let indicatorView: UIActivityIndicatorView = {
+        let indicatorView = UIActivityIndicatorView.init(activityIndicatorStyle: .Gray)
+        indicatorView.hidden = true
         return indicatorView
     }()
     
@@ -63,23 +63,23 @@ open class ESRefreshFooterAnimator: UIView, ESRefreshProtocol, ESRefreshAnimator
         fatalError("init(coder:) has not been implemented")
     }
     
-    open func refreshAnimationBegin(view: ESRefreshComponent) {
+    public func refreshAnimationBegin(view: ESRefreshComponent) {
         indicatorView.startAnimating()
         titleLabel.text = loadingDescription
-        indicatorView.isHidden = false
+        indicatorView.hidden = false
     }
     
-    open func refreshAnimationEnd(view: ESRefreshComponent) {
+    public func refreshAnimationEnd(view: ESRefreshComponent) {
         indicatorView.stopAnimating()
         titleLabel.text = loadingMoreDescription
-        indicatorView.isHidden = true
+        indicatorView.hidden = true
     }
     
-    open func refresh(view: ESRefreshComponent, progressDidChange progress: CGFloat) {
+    public func refresh(view: ESRefreshComponent, progressDidChange progress: CGFloat) {
         // do nothing
     }
     
-    open func refresh(view: ESRefreshComponent, stateDidChange state: ESRefreshViewState) {
+    public func refresh(view: ESRefreshComponent, stateDidChange state: ESRefreshViewState) {
         guard self.state != state else {
             return
         }
@@ -101,7 +101,7 @@ open class ESRefreshFooterAnimator: UIView, ESRefreshProtocol, ESRefreshAnimator
         self.setNeedsLayout()
     }
     
-    open override func layoutSubviews() {
+    public override func layoutSubviews() {
         super.layoutSubviews()
         let s = self.bounds.size
         let w = s.width

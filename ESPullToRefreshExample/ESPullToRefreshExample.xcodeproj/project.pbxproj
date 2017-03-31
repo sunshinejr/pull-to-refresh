@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1402C2701E8E717700B3998C /* GCDHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1402C26F1E8E717700B3998C /* GCDHelper.swift */; };
 		5A180DBC1E80112D00F9EE1A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5A180DBE1E80112D00F9EE1A /* Localizable.strings */; };
 		F63613701CDD9CCD00AA9AF7 /* MTRefreshHeaderAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F636136F1CDD9CCD00AA9AF7 /* MTRefreshHeaderAnimator.swift */; };
 		F63613721CDD9CD900AA9AF7 /* MTRefreshFooterAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63613711CDD9CD900AA9AF7 /* MTRefreshFooterAnimator.swift */; };
@@ -62,6 +63,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1402C26F1E8E717700B3998C /* GCDHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDHelper.swift; sourceTree = "<group>"; };
 		5A180DBD1E80112D00F9EE1A /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5A180DBF1E80113B00F9EE1A /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		5A180DC01E80114200F9EE1A /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -156,6 +158,7 @@
 				F69077071D0D0A7F00BE91FE /* ESRefreshAnimator.swift */,
 				F69077091D0D0A7F00BE91FE /* ESRefreshProtocol.swift */,
 				5A180DBE1E80112D00F9EE1A /* Localizable.strings */,
+				1402C26F1E8E717700B3998C /* GCDHelper.swift */,
 			);
 			name = Sources;
 			path = ../Sources;
@@ -327,7 +330,7 @@
 					};
 					F692000B1CDB9A530029EF47 = {
 						CreatedOnToolsVersion = 7.3;
-						DevelopmentTeam = A367N9R36B;
+						DevelopmentTeam = CCHRC6DB43;
 						LastSwiftMigration = 0800;
 					};
 				};
@@ -405,6 +408,7 @@
 				F69077211D0D0A7F00BE91FE /* ESRefreshProtocol.swift in Sources */,
 				F6AB6EA51D6AF82100AC33BE /* ESRefreshTableViewCell.swift in Sources */,
 				F6AA6C401CDC80DD00723622 /* WebViewController.swift in Sources */,
+				1402C2701E8E717700B3998C /* GCDHelper.swift in Sources */,
 				F690770B1D0D0A7F00BE91FE /* ESRefreshFooterAnimator.swift in Sources */,
 				F6AE47371CE089480006C017 /* WeChatTableHeaderView.swift in Sources */,
 				F6F63A3F1D3C75750017F621 /* ESRefreshDayHeaderAnimator.swift in Sources */,
@@ -472,7 +476,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.eggswift.ESPullToRefresh;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 2.3;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -494,7 +498,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.eggswift.ESPullToRefresh;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 2.3;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -598,13 +602,13 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = A367N9R36B;
+				DEVELOPMENT_TEAM = CCHRC6DB43;
 				INFOPLIST_FILE = ESPullToRefreshExample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.eggswift.ESPullToRefreshExample11;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sunshinejr.TestPagination;
 				PRODUCT_NAME = Example;
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 2.3;
 			};
 			name = Debug;
 		};
@@ -614,13 +618,13 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = A367N9R36B;
+				DEVELOPMENT_TEAM = CCHRC6DB43;
 				INFOPLIST_FILE = ESPullToRefreshExample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.eggswift.ESPullToRefreshExample11;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sunshinejr.TestPagination;
 				PRODUCT_NAME = Example;
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 2.3;
 			};
 			name = Release;
 		};

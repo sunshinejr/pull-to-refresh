@@ -33,39 +33,39 @@ public class ViewController: UIViewController, UITableViewDataSource, UITableVie
     public override func viewDidLoad() {
         super.viewDidLoad()
         let appearance = UIBarButtonItem.appearance()
-        appearance.setBackButtonTitlePositionAdjustment(UIOffset.init(horizontal: 0.0, vertical: -60), for: .default)
+        appearance.setBackButtonTitlePositionAdjustment(UIOffset.init(horizontal: 0.0, vertical: -60.0), forBarMetrics: .Default)
 
-        self.navigationController?.navigationBar.isTranslucent = true
+        self.navigationController?.navigationBar.translucent = true
         self.navigationController?.navigationBar.barTintColor = UIColor.init(red: 250/255.0, green: 250/255.0, blue: 250/255.0, alpha: 0.8)
-        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.init(red: 38/255.0, green: 38/255.0, blue: 38/255.0, alpha: 1.0), NSFontAttributeName: UIFont.systemFont(ofSize: 16.0)]
+        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.init(red: 38/255.0, green: 38/255.0, blue: 38/255.0, alpha: 1.0), NSFontAttributeName: UIFont.systemFontOfSize( 16.0)]
         self.navigationController?.navigationBar.tintColor = UIColor.init(red: 38/255.0, green: 38/255.0, blue: 38/255.0, alpha: 1.0)
         self.navigationItem.title = "Example"
         
-        self.tableView.register(UINib.init(nibName: "ListTableViewCell", bundle: nil), forCellReuseIdentifier: "ListTableViewCell")
+        self.tableView.registerNib(UINib.init(nibName: "ListTableViewCell", bundle: nil), forCellReuseIdentifier: "ListTableViewCell")
     }
     
-    public func select(indexPath: IndexPath) {
+    public func selectIndexPath(indexPath: NSIndexPath) {
         var vc: UIViewController!
         switch indexPath.row {
         case 0:
-            vc = ESRefreshTableViewController.init(style: .plain)
+            vc = ESRefreshTableViewController.init(style: .Plain)
             if let vc = vc as? ESRefreshTableViewController {
                 vc.type = .defaulttype
             }
         case 1:
-            vc = ESRefreshTableViewController.init(style: .plain)
+            vc = ESRefreshTableViewController.init(style: .Plain)
             if let vc = vc as? ESRefreshTableViewController {
                 vc.type = .meituan
             }
         case 2:
-            vc = ESRefreshTableViewController.init(style: .plain)
+            vc = ESRefreshTableViewController.init(style: .Plain)
             if let vc = vc as? ESRefreshTableViewController {
                 vc.type = .wechat
             }
         case 3:
             vc = TextViewController.init()
         case 4:
-            vc = ESRefreshTableViewController.init(style: .plain)
+            vc = ESRefreshTableViewController.init(style: .Plain)
         case 5:
             vc = CollectionViewController()
         default:
@@ -76,35 +76,34 @@ public class ViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     // MARK: UITableViewDataSource
-    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dataArray.count
     }
     
-    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    public func tableView(tableView: UITableView, heightForRowAt indexPath: NSIndexPath) -> CGFloat {
         return 54.0
     }
     
-    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = self.tableView.dequeueReusableCell(withIdentifier: "ListTableViewCell")
+    public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = self.tableView.dequeueReusableCellWithIdentifier("ListTableViewCell")
         if let cell = cell as? ListTableViewCell {
             cell.titleLabel.text = "\(indexPath.row + 1).   " + dataArray[indexPath.row]
         }
         return cell!
     }
     
-    public func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    public func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 0.5
     }
     
-    public func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+    public func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let view = UIView.init(frame: CGRect.init(x: 0, y: 0, width: tableView.bounds.size.width, height: 0.5))
-        view.backgroundColor = UIColor.lightGray
+        view.backgroundColor = UIColor.lightGrayColor()
         return view
     }
     
-    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath as IndexPath, animated: true)
-        self.select(indexPath: indexPath)
+    public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        self.selectIndexPath(indexPath)
     }
-    
 }

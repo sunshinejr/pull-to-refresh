@@ -15,9 +15,9 @@ class CollectionViewController: UIViewController {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.alwaysBounceVertical = true
-        collectionView.register(DemoCollectionViewCell.self, forCellWithReuseIdentifier: "DemoCell")
+        collectionView.registerClass(DemoCollectionViewCell.self, forCellWithReuseIdentifier: "DemoCell")
         collectionView.contentInset = UIEdgeInsetsMake(12.0, 15.0, 0, 15.0)
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = .whiteColor()
         return collectionView
     }()
     
@@ -33,11 +33,11 @@ class CollectionViewController: UIViewController {
         
         let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
         self.view.addSubview(collectionView)
-        let itemWidth = (UIScreen.main.bounds.width - 40) / 3
+        let itemWidth = (UIScreen.mainScreen().bounds.width - 40) / 3
         layout.itemSize = CGSize(width: itemWidth, height: itemWidth)
         layout.minimumLineSpacing = 5.0
         layout.minimumInteritemSpacing = 5.0
-        layout.scrollDirection = .vertical
+        layout.scrollDirection = .Vertical
         
         let viewsDict = [
             "collectionView": collectionView
@@ -46,8 +46,8 @@ class CollectionViewController: UIViewController {
             "H:|-0-[collectionView]-0-|",
             "V:|-0-[collectionView]-0-|"
         ]
-        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: vflDict[0] as String, options: [], metrics: nil, views: viewsDict))
-        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: vflDict[1] as String, options: [], metrics: nil, views: viewsDict))
+        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat( vflDict[0] as String, options: [], metrics: nil, views: viewsDict))
+        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat( vflDict[1] as String, options: [], metrics: nil, views: viewsDict))
         
         //  add pull to refresh
         self.collectionView.es_addPullToRefresh {
@@ -65,8 +65,8 @@ class CollectionViewController: UIViewController {
         }
     }
     
-    func delay(time: TimeInterval, completionHandler: @escaping ()-> Void) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + time) {
+    func delay(time time: Double, completionHandler: ()-> Void) {
+        Dispatch.after(time) {
             completionHandler()
         }
     }
@@ -85,13 +85,13 @@ class CollectionViewController: UIViewController {
 
 // MARK: UICollectionViewDataSource
 extension CollectionViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.list.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DemoCell", for: indexPath) as! DemoCollectionViewCell
-        cell.configureCell(title: self.list[indexPath.row])
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("DemoCell", forIndexPath: indexPath) as! DemoCollectionViewCell
+        cell.configureCell(self.list[indexPath.row])
         
         return cell
     }
@@ -103,8 +103,8 @@ class DemoCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.font = UIFont(name: "HelveticaNeue-Bold", size: 15)
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textAlignment = .center
-        label.textColor = .black
+        label.textAlignment = .Center
+        label.textColor = .blackColor()
         return label
     }()
     
@@ -115,8 +115,8 @@ class DemoCollectionViewCell: UICollectionViewCell {
         let vflDict = ["H:|-0-[label]-0-|",
                        "V:|-0-[label]-0-|"]
         contentView.addSubview(label)
-        contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: vflDict[0] as String, options: [], metrics: nil, views: viewsDict))
-        contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: vflDict[1] as String, options: [], metrics: nil, views: viewsDict))
+        contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(vflDict[0] as String, options: [], metrics: nil, views: viewsDict))
+        contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(vflDict[1] as String, options: [], metrics: nil, views: viewsDict))
     }
     
     required init?(coder aDecoder: NSCoder) {

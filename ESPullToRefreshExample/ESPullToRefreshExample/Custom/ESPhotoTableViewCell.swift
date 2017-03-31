@@ -18,7 +18,7 @@ class ESPhotoTableViewCell: UITableViewCell {
         // Initialization code
     }
 
-    func updateContent(indexPath: IndexPath) {
+    func updateContent(indexPath: NSIndexPath) {
         let name = String.init(format: "Photo_Lofter_%d", (indexPath.row) % 9 + 1)
         self.photoImageView.image = UIImage.init(named: name)
         self.indexLabel.text = String.init(format: "Section: %d Row: %d", indexPath.section, indexPath.row)

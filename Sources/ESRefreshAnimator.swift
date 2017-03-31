@@ -26,40 +26,40 @@
 import Foundation
 import UIKit
 
-open class ESRefreshAnimator: ESRefreshProtocol, ESRefreshAnimatorProtocol {
+public class ESRefreshAnimator: ESRefreshProtocol, ESRefreshAnimatorProtocol {
     // The view that called when component refresh, returns a custom view or self if 'self' is the customized views.
-    open var view: UIView
+    public var view: UIView
     // Customized inset.
-    open var insets: UIEdgeInsets
+    public var insets: UIEdgeInsets
     // Refresh event is executed threshold required y offset, set a value greater than 0.0, the default is 60.0
-    open var trigger: CGFloat = 60.0
+    public var trigger: CGFloat = 60.0
     // Offset y refresh event executed by this parameter you can customize the animation to perform when you refresh the view of reservations height
-    open var executeIncremental: CGFloat = 60.0
+    public var executeIncremental: CGFloat = 60.0
     // Current refresh state, default is .pullToRefresh
-    open var state: ESRefreshViewState = .pullToRefresh
+    public var state: ESRefreshViewState = .pullToRefresh
     
     public init() {
         view = UIView()
-        insets = UIEdgeInsets.zero
+        insets = UIEdgeInsetsZero
     }
     
-    open func refreshAnimationBegin(view: ESRefreshComponent) {
+    public func refreshAnimationBegin(view: ESRefreshComponent) {
         /// Do nothing!
     }
     
-    open func refreshAnimationWillEnd(view: ESRefreshComponent) {
+    public func refreshAnimationWillEnd(view: ESRefreshComponent) {
         /// Do nothing!
     }
     
-    open func refreshAnimationEnd(view: ESRefreshComponent) {
+    public func refreshAnimationEnd(view: ESRefreshComponent) {
         /// Do nothing!
     }
     
-    open func refresh(view: ESRefreshComponent, progressDidChange progress: CGFloat) {
+    public func refresh(view: ESRefreshComponent, progressDidChange progress: CGFloat) {
         /// Do nothing!
     }
     
-    open func refresh(view: ESRefreshComponent, stateDidChange state: ESRefreshViewState) {
+    public func refresh(view: ESRefreshComponent, stateDidChange state: ESRefreshViewState) {
         /// Do nothing!
     }
 }

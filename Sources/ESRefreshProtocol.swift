@@ -50,7 +50,7 @@ public protocol ESRefreshProtocol {
     
     /**
      Refresh operation stop execution method
-     Here you can reset your refresh control UI, such as a Stop UIImageView animations or some opened Timer refresh, etc., it will be executed once each time the need to end the animation
+     Here you can reset your refresh control UI, such as a Stop UIImageView animations or some opened NSTimer refresh, etc., it will be executed once each time the need to end the animation
      */
     mutating func refreshAnimationEnd(view: ESRefreshComponent)
     
@@ -87,11 +87,11 @@ public protocol ESRefreshAnimatorProtocol {
  *  Support iPhone7/iPhone7 Plus or later feedback impact
  *  You can confirm the ESRefreshImpactProtocol
  */
-fileprivate class ESRefreshImpacter {
+private class ESRefreshImpacter {
     static private var impacter: AnyObject? = {
         if #available(iOS 10.0, *) {
             if NSClassFromString("UIFeedbackGenerator") != nil {
-                let generator = UIImpactFeedbackGenerator.init(style: .light)
+                let generator = UIImpactFeedbackGenerator.init(style: .Light)
                 generator.prepare()
                 return generator
             }
@@ -99,7 +99,7 @@ fileprivate class ESRefreshImpacter {
         return nil
     }()
     
-    static open func impact() -> Void {
+    static func impact() -> Void {
         if #available(iOS 10.0, *) {
             if let impacter = impacter as? UIImpactFeedbackGenerator {
                 impacter.impactOccurred()

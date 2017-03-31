@@ -9,7 +9,7 @@
 import UIKit
 
 public class ESRefreshDayHeaderAnimator: UIView, ESRefreshProtocol, ESRefreshAnimatorProtocol {
-    public var insets: UIEdgeInsets = UIEdgeInsets.zero
+    public var insets: UIEdgeInsets = UIEdgeInsetsZero
     public var view: UIView { return self }
     public var trigger: CGFloat = 120.0
     public var executeIncremental: CGFloat = 120.0
@@ -18,19 +18,19 @@ public class ESRefreshDayHeaderAnimator: UIView, ESRefreshProtocol, ESRefreshAni
     private var percent: CGFloat = 0
     private var isDay: Bool = true {
         didSet {
-            self.dayImageView.isHidden = !isDay
-            self.nightImageView.isHidden = isDay
+            self.dayImageView.hidden = !isDay
+            self.nightImageView.hidden = isDay
         }
     }
-    private lazy var timer: Timer! = {
-        let timer = Timer.scheduledTimer(timeInterval: 0.002, target: self, selector: #selector(ESRefreshDayHeaderAnimator.timerAction), userInfo: nil, repeats: true)
+    private lazy var timer: NSTimer! = {
+        let timer = NSTimer.scheduledTimerWithTimeInterval(0.002, target: self, selector: #selector(ESRefreshDayHeaderAnimator.timerAction), userInfo: nil, repeats: true)
         return timer
     }()
     
     private let backImageView: UIImageView = {
         let imageView = UIImageView.init()
         imageView.image = UIImage.init(named: "icon_pull_to_refresh_back")
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = .ScaleAspectFill
         imageView.clipsToBounds = true
         return imageView
     }()
@@ -44,7 +44,7 @@ public class ESRefreshDayHeaderAnimator: UIView, ESRefreshProtocol, ESRefreshAni
         let imageView = UIImageView.init()
         imageView.image = UIImage.init(named: "icon_pull_to_refresh_night")
         imageView.sizeToFit()
-        imageView.isHidden = true
+        imageView.hidden = true
         return imageView
     }()
     
@@ -103,7 +103,7 @@ public class ESRefreshDayHeaderAnimator: UIView, ESRefreshProtocol, ESRefreshAni
         let w = self.bounds.size.width
         let h = self.bounds.size.height
         let x = p * w
-        let y = top + (size.height / 2.0) + (h - top - buttom - size.height) * (1 - CGFloat(sin(CGFloat(Double.pi) * p)))
+        let y = top + (size.height / 2.0) + (h - top - buttom - size.height) * (1 - CGFloat(sin(CGFloat(M_PI) * p)))
         if isDay {
             let colorP = p < 0.5 ? (0.5 + p) : (p == 0.5 ? 1.0 : (0.5 + 1.0 - p))
             self.backgroundColor = UIColor.init(white: colorP, alpha: 1.0)
