@@ -109,6 +109,16 @@ public extension UIScrollView {
         }
     }
     
+    public func es_startInfiniteScroll() {
+        let queue = dispatch_get_main_queue()
+        dispatch_async(queue) { [weak self] in
+            guard let weakSelf = self else {
+                return
+            }
+            weakSelf.es_footer?.startRefreshing(false)
+        }
+    }
+    
     /// Auto refresh if expired.
     public func es_autoPullToRefresh() {
         if self.expired == true {
